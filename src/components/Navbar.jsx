@@ -10,7 +10,7 @@ export default function Navbar(){
             
             <a href="https://github.com/DEVD-04/Pass-Keeper" target="_blank" rel="noopener noreferrer">
             <button className="text-white">
-                <img src="public/git2.png" alt="" />
+                <img src="/git2.png" alt="" />
             </button>
             </a>
             </div>

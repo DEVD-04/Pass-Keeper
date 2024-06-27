@@ -31,11 +31,11 @@ const Manager = () => {
     const showPassword = () => {
         // passwordRef.current.type="text"
         if (ref.current.src.includes("eyecross.png")) {
-            ref.current.src = "public/eye1.png"
+            ref.current.src = "/eye1.png"
             passwordRef.current.type = "password"
         }
         else {
-            ref.current.src = "public/eyecross.png"
+            ref.current.src = "/eyecross.png"
             passwordRef.current.type = "text"
         }
     }
@@ -137,7 +137,7 @@ const Manager = () => {
                                 onChange={handleChange}
                                 className="rounded-lg border border-slate-400 w-full p-4 py-1" />
                             <span className="absolute right-0 top-0 cursor-pointer" onClick={showPassword}>
-                                <img ref={ref} className="p-2" src="public/eye1.png" alt="" width={35} />
+                                <img ref={ref} className="p-2" src="/eye1.png" alt="" width={35} />
                             </span>
                         </div>
                     </div>
@@ -169,29 +169,29 @@ const Manager = () => {
                                     <td className="py-2 border border-white">
                                         <div className="flex gap-3 items-center justify-center">
                                             <a href={p.site} target="_blank">{p.site}</a>
-                                            <img src="public/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
+                                            <img src="/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => copyContent(p.site)} />
                                         </div>
                                     </td>
                                     <td className="py-2 border border-white">
                                         <div className="flex gap-3 items-center justify-center">
                                             {p.username}
-                                            <img src="public/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
+                                            <img src="/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => copyContent(p.username)} />
                                         </div>
                                     </td>
                                     <td className="py-2 border border-white">
                                         <div className="flex gap-3 items-center justify-center">
                                             {p.password}
-                                            <img src="public/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
+                                            <img src="/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => copyContent(p.password)} />
                                         </div>
                                     </td>
                                     <td className="py-2 border border-white">
                                         <span className="flex gap-2 justify-center">
-                                        <img src="public/edit.png" alt="" className="h-4 w-4 cursor-pointer"
+                                        <img src="/edit.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => editPassword(p.id)} />
-                                        <img src="public/delete.png" alt="" className="h-4 w-4 cursor-pointer"
+                                        <img src="/delete.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => deletePassword(p.id)} />
                                         </span>
                                         <span>
