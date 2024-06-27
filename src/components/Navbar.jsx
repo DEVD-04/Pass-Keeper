@@ -8,7 +8,7 @@ export default function Navbar(){
                 <span className="text-blue-300">Pass...Keeper</span>
             </div>
             
-            <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/DEVD-04/Pass-Keeper" target="_blank" rel="noopener noreferrer">
             <button className="text-white">
                 <img src="public/git2.png" alt="" />
             </button>
