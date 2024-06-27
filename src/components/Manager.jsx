@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {v4 as uuidv4} from "uuid"
 
 const Manager = () => {
     const ref = useRef()
@@ -33,37 +34,38 @@ const Manager = () => {
     const savePassword = () => {
 
         if (!form.site || !form.username || !form.password) {
-            toast('All fields are required!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
+            toast('All fields are required!', {autoClose: 2000});
             return;
         }
-        setPasswordArray([...passwordArray, form]);
-        localStorage.setItem("password", JSON.stringify([...passwordArray, form]));
+        setPasswordArray([...passwordArray, {...form, id: uuidv4()}]);
+        localStorage.setItem("password", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
         // console.log([...passwordArray, form]);
+        
         setForm({ site: "", username: "", password: "" }); // Reset form
+        
+    }
+
+    const deletePassword = (id) =>{
+        console.log("deleting password with id :"+id)
+        let con=confirm("Delete the Password ?")
+        if(con){
+        setPasswordArray(passwordArray.filter(item =>item.id!=id));
+        localStorage.setItem("password", JSON.stringify(passwordArray.filter(item =>item.id!=id)));
+        // toast.success('Password deleted successfully', {autoClose:1000});
+    }
+    }
+
+    const editPassword = (id) =>{
+        console.log("editing password with id :"+id)
+        setForm(passwordArray.filter(item =>item.id===id)[0]); // Reset form
+        setPasswordArray(passwordArray.filter(item =>item.id!=id));
+        localStorage.setItem("password", JSON.stringify(passwordArray.filter(item =>item.id!=id)));
     }
 
     const copyContent = (c) => {
         navigator.clipboard.writeText(c);
         // alert("Copied to clipboard!");
-        toast('Copied to clipboard!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
+        toast('Copied to clipboard!', {autoClose: 2000} );
     }
 
     const handleChange = (e) => {
@@ -73,10 +75,10 @@ const Manager = () => {
         <>
             <ToastContainer
                 position="top-right"
-                autoClose={2000}
+                autoClose={1000}
                 hideProgressBar={false}
                 newestOnTop={false}
-                closeOnClick
+                closeOnClick={true}
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
@@ -88,23 +90,23 @@ const Manager = () => {
             <ToastContainer />
             <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
-            <div className="mycontainer">
+            <div className="p-2 md:p-0 md:mycontainer">
                 <h1 className="text-blue-800 text-4xl font-bold text-center">Pass...Keeper</h1>
                 <p className="text-red-800 font-bold text-center">Keep your secrets more secret!!!</p>
 
                 <div className="flex flex-col items-center p-4 gap-5">
 
-                    <input type="text" name="site" id="" value={form.site} placeholder="Website URL"
+                    <input type="text" name="site" id="site" value={form.site} placeholder="Website URL"
                         onChange={handleChange}
                         className="rounded-lg border border-slate-400 w-full p-4 py-1" />
-                    <div className="flex w-full justify-between gap-5">
+                    <div className="flex flex-col md:flex-row  w-full justify-between gap-5">
 
-                        <input type="text" name="username" id="" value={form.username} placeholder="Username"
+                        <input type="text" name="username" id="username" value={form.username} placeholder="Username"
                             onChange={handleChange}
                             className="rounded-lg border border-slate-400 w-full p-4 py-1" />
                         <div className="relative">
 
-                            <input ref={passwordRef} type="password" name="password" id="" value={form.password} placeholder="Password"
+                            <input ref={passwordRef} type="password" name="password" id="password" value={form.password} placeholder="Password"
                                 onChange={handleChange}
                                 className="rounded-lg border border-slate-400 w-full p-4 py-1" />
                             <span className="absolute right-0 top-0 cursor-pointer" onClick={showPassword}>
@@ -125,12 +127,13 @@ const Manager = () => {
                 <div className="passwords">
                     <h2 className="font-bold text-2xl py-4 ">Your Passwords</h2>
                     {passwordArray.length === 0 && <div> No Passwords Saved</div>}
-                    {passwordArray.length !== 0 && <table className="table-auto w-full rounded-md overflow-hidden">
+                    {passwordArray.length !== 0 && <table className="table-auto w-full rounded-md overflow-hidden mb-10">
                         <thead className="bg-cyan-400">
                             <tr>
                                 <th className="py-2">Site</th>
                                 <th className="py-2">Username</th>
                                 <th className="py-2">Password</th>
+                                <th className="py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="bg-cyan-100 ">
@@ -156,6 +159,17 @@ const Manager = () => {
                                             <img src="public/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => copyContent(p.password)} />
                                         </div>
+                                    </td>
+                                    <td className="py-2 border border-white">
+                                        <span className="flex gap-2 justify-center">
+                                        <img src="public/edit.png" alt="" className="h-4 w-4 cursor-pointer"
+                                                onClick={() => editPassword(p.id)} />
+                                        <img src="public/delete.png" alt="" className="h-4 w-4 cursor-pointer"
+                                                onClick={() => deletePassword(p.id)} />
+                                        </span>
+                                        <span>
+                                        
+                                        </span>
                                     </td>
                                 </tr>
                             })}
