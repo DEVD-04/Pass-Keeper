@@ -146,6 +146,8 @@ const Manager = () => {
                                             {showPassword[p.id] ? p.password : '********'}
                                             <img src={showPassword[p.id] ? "/eye1.png" : "/eyecross.png"} alt="" className="h-4 w-4 cursor-pointer"
                                                 onClick={() => showPasswordToggle(p.id)} />
+                                            <img src="/copy2.png" alt="" className="h-4 w-4 cursor-pointer"
+                                                onClick={() => copyContent(p.password)} />
                                         </div>
                                     </td>
                                     <td className="py-2 border border-white break-words w-1/4">
